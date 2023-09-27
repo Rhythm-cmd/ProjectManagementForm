@@ -4,6 +4,15 @@
 ## Description
 This project is a web-based Project enrollment form that allows users to enter and store student data using JsonPowerDB. It provides functionalities to save, update, and reset project information in the database.
 
+## Table of Contents
+- [Description](#description)
+- [Benefits of using JsonPowerDB](#benefits-of-using-jsonpowerdb)
+- [Syntax](#Easiest Syntax Usage)
+- [Release History](#release-history)
+- [Illustration ](#illustration)
+- [Scope of Functionalities](#scope-of-functionalities)
+- [Sources](#sources)
+
 ## Benefits of using JsonPowerDB
 -Proprietary algorithm for High-Performance CRUD operations. Multiple times faster than popular DBMS.
 -Serverless support for faster development - A UI developer can develop the dynamic application.
@@ -45,15 +54,7 @@ This project is a web-based Project enrollment form that allows users to enter a
 ## Release History
 - [Version 1.0.0](https://github.com/your-username/your-repo/releases/tag/v1.0.0) - Initial release of the Project Management Form with JsonPowerDB integration.
 
-## Table of Contents
-- [Description](#description)
-- [Benefits of using JsonPowerDB](#benefits-of-using-jsonpowerdb)
-- [Release History](#release-history)
-- [Illustration ](#illustration)
-- [Scope of Functionalities](#scope-of-functionalities)
-- [Usage](#usage)
-- [Project Status](#project-status)
-- [Sources](#sources)
+
 
 ## Illustrations
 Include relevant screenshots or images showcasing the Project Management Form and its features.
