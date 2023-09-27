@@ -7,7 +7,7 @@ This project is a web-based Project enrollment form that allows users to enter a
 ## Table of Contents
 - [Description](#description)
 - [Benefits of using JsonPowerDB](#benefits-of-using-jsonpowerdb)
-- [Syntax](#Easiest Syntax Usage)
+- [Syntax](#easiest-syntax-usage-)
 - [Release History](#release-history)
 - [Illustration ](#illustration)
 - [Scope of Functionalities](#scope-of-functionalities)
