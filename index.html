@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Management Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src=" http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js "></script>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Project Management Form</h2>
+    <form id="enrollmentForm">
+      <div class="form-group">
+        <label for="ProjectID">Project-ID:</label>
+        <input type="text" class="form-control" id="ProjectID" placeholder="Enter Project-ID" autofocus>
+      </div>
+      <div class="form-group">
+        <label for="fullName">Project-Name:</label>
+        <input type="text" class="form-control" id="ProjectName" placeholder="Enter Project-Name" >
+      </div>
+      <div class="form-group">
+        <label for="AssignedTo">Assigned-To:</label>
+        <input type="text" class="form-control" id="AssignedTo" placeholder="Assigned-To" >
+      </div>
+      <div class="form-group">
+        <label for="AssignmentDate">Assignment-Date:</label>
+        <input type="date" class="form-control" id="AssignmentDate" placeholder="Enter Assignment-Date" >
+      </div>
+      <div class="form-group">
+        <label for="Deadline">Deadline:</label>
+        <input type="date" class="form-control" id="Deadline" placeholder="Enter Deadline" >
+      </div>
+      <button type="button" class="btn btn-primary" id="saveBtn" >Save</button>
+      <button type="button" class="btn btn-primary" id="updateBtn" >Update</button>
+      <button type="button" class="btn btn-default" id="resetBtn" >Reset</button>
+    </form>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="jpdb-commons.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#ProjectID").focus();
+
+      function disableFieldsAndButtons() {
+        $("#enrollmentForm input[type='text']").not("#ProjectID").prop("disabled", true);
+        $("#saveBtn, #updateBtn, #resetBtn").prop("disabled", true);
+      }
+
+      function enableSaveResetButtons() {
+        $("#saveBtn, #resetBtn").prop("disabled", false);
+      }
+
+      function enableUpdateResetButtons() {
+        $("#updateBtn, #resetBtn").prop("disabled", false);
+      }
+
+      function resetForm() {
+        $("#enrollmentForm input[type='text']").val("");
+        $("#ProjectID").focus();
+      }
+
+      function validateFormData() {
+        var ProjectID = $("#Project-ID").val();
+        var ProjectName = $("#Project-Name").val();
+        var AssignedTo = $("#Assigned-To").val();
+        var AssignmentDate = $("Assignment-Date").val();
+        var Deadline = $("#Deadline").val();
+
+        if (ProjectID === "" || ProjectName === "" || AssignedTo === "" || AssignmentDate === "" || Deadline === "" ) {
+          alert("All fields are required!");
+          return false;
+        }
+
+        return true;
+      }
+
+      function saveStudentData() {
+        var ProjectID = $("#ProjectID").val();
+        var ProjectName = $("#ProjectName").val();
+        var AssignedTo = $("#AssignedTo").val();
+        var AssignmentDate = $("#AssignmentDate").val();
+        var Deadline = $("#Deadline").val();
+
+        var jsonData = {
+          "ProjectID": ProjectID,
+          "ProjectName": ProjectName,
+          "AssignedTo": AssignedTo,
+          "AssignmentDate": AssignmentDate,
+          "Deadline": Deadline,
+    
+        };
+
+        var putRequest = createPUTRequest("90931665|-31949327057455903|90961523", JSON.stringify(jsonData), "COLLEGE-DB", "PROJECT-TABLE");
+
+        var resultObj = executeCommandAtGivenBaseUrl(putRequest, "http://api.login2explore.com:5577", "/api/iml");
+        alert(JSON.stringify(jsonData));
+      }
+
+      function checkProjectIDExists() {
+        var ProjectID = $("#ProjectID").val();
+
+        var getRequest = createGETRequest("90931665|-31949327057455903|90961523", "COLLEGE-DB", "PROJECT-TABLE", { "ProjectID": ProjectID });
+
+        var resultObj = executeCommandAtGivenBaseUrl(getRequest, "http://api.login2explore.com:5577", "/api/iml");
+
+        if (resultObj && resultObj.data && resultObj.data.length > 0) {
+          enableUpdateResetButtons();
+          $("#ProjectName").val(resultObj.data[0]["ProjectName"]).prop("disabled", false).focus();
+          $("#AssignedTo").val(resultObj.data[0]["AssignedTo"]).prop("disabled", false);
+          $("#AssignmentDate").val(resultObj.data[0]["AssignmentDate"]).prop("disabled", false);
+          $("#Deadline").val(resultObj.data[0]["Deadline"]).prop("disabled", false);
+          
+        } else {
+          enableSaveResetButtons();
+          $("#ProjectName").prop("disabled", false).focus();
+          $("#AssignedTo").prop("disabled", false);
+          $("#AssignmentDate").prop("disabled", false);
+          $("#Deadline").prop("disabled", false);
+  
+        }
+      }
+
+      $("#ProjectID").on("blur", function () {
+        checkProjectIDExists();
+      });
+
+      $("#saveBtn").on("click", function () {
+        if (validateFormData()) {
+          saveStudentData();
+          resetForm();
+          disableFieldsAndButtons();
+        }
+      });
+
+      $("#updateBtn").on("click", function () {
+        if (validateFormData()) {
+          saveStudentData();
+          resetForm();
+          disableFieldsAndButtons();
+        }
+      });
+
+      $("#resetBtn").on("click", function () {
+        resetForm();
+        disableFieldsAndButtons();
+      });
+
+      disableFieldsAndButtons();
+    });
+  </script>
+</body>
+
+</html>
